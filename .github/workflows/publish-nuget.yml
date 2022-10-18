@@ -1,0 +1,37 @@
+name: Publish NuGet
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/publish-nuget.yml'
+      - 'src/Nullable/**.cs'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish on NuGet and GPR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0
+      
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@master
+        with:
+          dotnet-version: 6.x.x
+
+      - run: dotnet run --project build/_build.csproj
+      
+      - name: Push to NuGet
+        run: dotnet nuget push "./artifacts/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://www.nuget.org --skip-duplicate
+        shell: pwsh
+
+      - name: Push to GPR
+        run: |
+             for f in ./artifacts/*.nupkg
+             do
+               curl -vX PUT -u "vslee:${{secrets.GITHUB_TOKEN}}" -F package=@$f https://nuget.pkg.github.com/BUTR/
+             done
