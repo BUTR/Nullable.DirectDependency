@@ -16,7 +16,7 @@ This package does not contain any compiled binaries, but instead adds the attrib
 
 The C# code is only included if you are targeting a framework version which does not support the new nullable attributes. For example, if you create a library which multi-targets .NET Standard 2.0 and 2.1, the majority of the attributes are not included in the .NET Standard 2.1 version, because it already provides these by default.
 
-Please see https://github.com/manuelroemer/Nullable for additional information on how to use this package.
+Please see https://github.com/manuelroemer/Nullable.DirectDependency for additional information on how to use this package.
     </description>
     <releaseNotes>https://github.com/manuelroemer/Nullable.DirectDependency/blob/master/CHANGELOG.md</releaseNotes>
     <tags>source compiletime null nullable attributes allownull disallownull doesnotreturn doesnotreturnif maybenull maybenullwhen notnull notnullifnotnull notnullwhen membernotnull membernotnullwhen</tags>
